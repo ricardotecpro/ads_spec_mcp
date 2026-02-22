@@ -1,0 +1,149 @@
+# Aula 06 - Implementação de um Servidor MCP ⚙️
+## Do Setup ao "Olá Mundo"
+
+---
+
+## Agenda de Hoje 📅
+
+1. Escolha da Stack (Node vs Python) <!-- .element: class="fragment" -->
+2. SDKs Oficiais <!-- .element: class="fragment" -->
+3. Estrutura de um Projeto MCP <!-- .element: class="fragment" -->
+4. Criando sua Primeira Tool <!-- .element: class="fragment" -->
+5. Depuração com o Inspector <!-- .element: class="fragment" -->
+
+---
+
+## 1. Node.js vs Python 🥊
+
+- **Node.js**: Ótimo para integrações de rede e APIs web. <!-- .element: class="fragment" -->
+- **Python**: Melhor para ciência de dados e IA nativa. <!-- .element: class="fragment" -->
+- O protocolo MCP é idêntico em ambos! <!-- .element: class="fragment" -->
+
+---
+
+## 2. Setup com Node.js (TypeScript) 📂
+
+```bash
+npm init -y
+npm install @modelcontextprotocol/sdk zod
+```
+
+---
+
+## 3. Registrando uma Tool (Exemplo) 🛠️
+
+```typescript
+server.tool(
+  "ola", 
+  "Retorna uma saudação",
+  { nome: z.string() },
+  async ({ nome }) => {
+    return { 
+      content: [{ type: "text", text: `Olá, ${nome}!` }] 
+    };
+  }
+);
+```
+
+---
+
+## 4. O Poder do Zod (TypeScript) 🛡️
+
+- Validação em tempo de execução. <!-- .element: class="fragment" -->
+- Garante que a IA envie os dados corretos. <!-- .element: class="fragment" -->
+- Gera o JSON Schema automaticamente. <!-- .element: class="fragment" -->
+
+---
+
+## 5. Setup com Python (FastMCP) 🐍
+
+```bash
+pip install mcp fastmcp
+```
+
+```python
+from fastmcp import FastMCP
+mcp = FastMCP("Meu App")
+
+@mcp.tool()
+def somar(a: int, b: int) -> int:
+    return a + b
+```
+
+---
+
+## 6. Depuração: O MCP Inspector 🔍
+
+- Ferramenta visual para testar o servidor. <!-- .element: class="fragment" -->
+- Não precisa de um LLM real para rodar. <!-- .element: class="fragment" -->
+- Permite ver erros de sintaxe rapidamente. <!-- .element: class="fragment" -->
+
+---
+
+## 7. Rodando o Inspetor
+
+```termynal
+$ npx @modelcontextprotocol/inspector node build/index.js
+[INFO] Server connected!
+[INFO] Tools: ola, somar.
+```
+
+---
+
+## 8. Boas Práticas de Implementação
+
+- Use nomes de ferramentas claros. <!-- .element: class="fragment" -->
+- Documente os parâmetros com `.describe()`. <!-- .element: class="fragment" -->
+- Trate exceções para não derrubar o servidor. <!-- .element: class="fragment" -->
+
+---
+
+## 9. Estrutura de Arquivos Recomendada
+
+```text
+├── src/
+│   ├── index.ts
+│   ├── handlers/
+│   └── utils/
+├── package.json
+└── tsconfig.json
+```
+
+---
+
+## 10. Diagrama de Registro
+
+```mermaid
+graph LR
+    A[Código Dev] --> B[SDK MCP]
+    B --> C[Registro Tool]
+    C --> D[Geração Schema]
+    D --> E[Pronto para IA]
+```
+
+---
+
+## 11. O Arquivo de Configuração do Cliente
+
+- Onde registrar o seu servidor local. <!-- .element: class="fragment" -->
+- `claude_desktop_config.json`. <!-- .element: class="fragment" -->
+
+---
+
+## 12. Resumo ✅
+
+- SDKs facilitam o trabalho. <!-- .element: class="fragment" -->
+- Zod/Python type hints validam dados. <!-- .element: class="fragment" -->
+- O Inspetor é o melhor amigo do dev. <!-- .element: class="fragment" -->
+
+---
+
+## 13. Mini-Projeto: Ola Mundo
+
+- Criar um servidor que diz a hora atual. <!-- .element: class="fragment" -->
+
+---
+
+## 14. Dúvidas? 🤔
+
+> "A simplicidade é o último degrau da sofisticação."
